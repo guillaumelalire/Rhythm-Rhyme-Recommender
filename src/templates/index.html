@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+  <head>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <style>
+      * {
+        font-family: Montserrat, Arial, sans-serif;
+        color: #ffffff;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #000000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      h2 {
+        text-align: center;
+        margin-top: 10px;
+      }
+      a {
+        text-decoration: none;
+      }
+      a:hover {
+        color: #3366CC;
+      }
+      img {
+        margin-right: 30px
+      }
+      .content {
+        width: 400px;
+        padding: 20px;
+        background-color: #121212;
+        border-radius: 8px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      input[type="text"] {
+        width: calc(100% - 12px);
+        padding: 8px;
+        margin-bottom: 10px;
+        border: none;
+        border-radius: 4px;
+        background-color: #242424;
+      }
+      input[type="submit"] {
+        width: 30%;
+        padding: 10px;
+        background-color: #242424;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        font-weight: bold;
+        margin-top: 10px;
+      }
+      input[type="submit"]:hover {
+        background-color: #282828;
+      }
+      footer {
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        font-size: 14px;
+      }
+      .error-banner {
+        background-color: #A50A0A;
+        padding: 10px;
+        border-radius: 4px;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="{{url_for('static', filename='music-notes.svg')}}" width=250px>
+    <div class="content">
+      <h2>Spotify Song Recommender</h2>
+      {% if not_found == True %}
+      <div class="error-banner" id="error-banner">Sorry, we couldn't find that song.<br>Please try again with a different one.</div>
+      {% endif %}
+      <form method="post" action="/">
+        <label for="song_name">Song</label>
+        <input type="text" id="song_name" name="song_name">
+        <label for="artist_name">Artist</label>
+        <input type="text" id="artist_name" name="artist_name" placeholder="optional">
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+    <footer>
+      <p>&copy; 2024 <a href="https://github.com/guillaumelalire">Guillaume Lalire</a></p>
+    </footer>
+  </body>
+</html>

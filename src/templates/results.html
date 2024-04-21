@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{{ song_name }}: Similar songs</title>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <style>
+      * {
+        font-family: Montserrat, Arial, sans-serif;
+        color: #ffffff;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #000000; /* Grey background color */
+      }
+      h2 {
+        text-align: center;
+      }
+      a {
+        text-decoration: none;
+      }
+      a:hover {
+        color: #3366CC;
+      }
+      img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: -20px;
+        margin-top: 10px
+      }
+      table {
+        width: 50%;
+        margin-top: 20px;
+        border-collapse: collapse;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      th, td {
+        padding: 12px 15px;
+        text-align: left;
+      }
+      th:first-child {
+        border-top-left-radius: 8px;
+      }
+      th:last-child {
+        border-top-right-radius: 8px;
+      }
+      th {
+        background-color: #121212;
+        color: white;
+        font-weight: bold;
+      }
+      tr {
+        background-color: #242424;
+      }
+      .button-container {
+        text-align: center;
+        margin-top: 20px;
+      }
+      .button-container a {
+        text-decoration: none;
+      }
+      .button-container button {
+        padding: 10px 20px;
+        background-color: #242424;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-weight: bold;
+      }
+      .button-container button:hover {
+        background-color: #282828;
+      }
+      footer {
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        font-size: 14px;
+      }
+    </style>
+    <img src="{{url_for('static', filename='heart-sparkles.svg')}}" width=70px>
+    <table>
+      <h2>Here are some top picks if you're a fan of "{{ song_name }}" by {{ artist_name }}.</h2>
+      <thead>
+        <tr>
+          <th>Song</th>
+          <th>Artist</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for rec in recommendation %}
+        <tr>
+          <td>{{rec[0]}}</td>
+          <td>{{rec[1]}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="button-container">
+      <a href="{{ url_for('index') }}">
+      <button type="button">Back</button>
+      </a>
+    </div>
+    <footer>
+      <p>&copy; 2024 <a href="https://github.com/guillaumelalire">Guillaume Lalire</a></p>
+    </footer>
+    </body>
+</html>
