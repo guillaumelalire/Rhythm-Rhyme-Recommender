@@ -3,6 +3,8 @@
 ## Overview
 This project aims to provide users song recommendations similar to a specific song they provide.
 
+![SpotifySongRecommenderDemo](https://github.com/guillaumelalire/Spotify-Song-Recommender/assets/77934673/8e7a258b-69e7-49f6-bad9-ed11b5cf25eb)
+
 ## Features
 - **Web Scraping:** Lyrics were not included in the base dataset and are retrieved from [Genius](https://genius.com/).
 - **Recommender System:** The system employs the k-Nearest Neighbors (kNN) algorithm to find songs with attributes closest to a given song.
