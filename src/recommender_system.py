@@ -12,7 +12,7 @@ def init_recommender_system():
     lyrics_df = pd.DataFrame()
 
     for i in range(0, nb_lyrics_files):
-        lyrics_df = lyrics_df.append(pd.read_csv(f"../data/song_lyrics/song_lyrics_{i}.csv"))
+        lyrics_df = pd.concat([lyrics_df, pd.read_csv(f"../data/song_lyrics/song_lyrics_{i}.csv")])
 
     lyrics_df.set_index('Unnamed: 0', inplace=True)
 
@@ -47,8 +47,7 @@ def init_recommender_system():
 
 def make_recommendation(df, song_name, artist_name):
     # Extract all the relevant features for the kNN algorithm
-    print(artist_name)
-    features = df[['track_popularity', 'track_album_release_date', 'energy', 'key', 'loudness', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo', 'duration_ms', *[str(x) for x in range(20)]]]
+    features = df[['track_popularity', 'track_album_release_date', 'energy', 'key', 'loudness', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo', 'duration_ms', *[str(x) for x in range(50)]]]
     
     # Initialize and fit the kNN model
     knn = NearestNeighbors(n_neighbors=2, radius=0.4)

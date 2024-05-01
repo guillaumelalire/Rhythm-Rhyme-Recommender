@@ -9,7 +9,7 @@ def generate_embeddings(lyrics, song_names):
     nb_songs = len(lyrics)
     tagged_data = [TaggedDocument(words=word_tokenize(lyrics[i].lower()), tags=[song_names[i]]) for i in range(nb_songs)]
 
-    model = Doc2Vec(vector_size=20, min_count=2, epochs=50)
+    model = Doc2Vec(vector_size=50, min_count=5, epochs=50)
     model.build_vocab(tagged_data)
     model.train(tagged_data, total_examples=model.corpus_count, epochs=model.epochs)
 

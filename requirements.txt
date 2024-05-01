@@ -4,6 +4,5 @@ Flask==3.0.3
 gensim==4.3.2
 nltk==3.6.6
 pandas==2.0.0
-pandas==2.0.0
 python-dotenv==1.0.1
 scikit_learn==1.1.3
