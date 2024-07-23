@@ -79,7 +79,6 @@ def make_recommendation(music_df, lyrics_df, song_name, artist_name):
     lyrics_recommendations = pd.DataFrame()
     lyrics_recommendations['distance_lyrics'] = normalize(lyrics_distances[0], min_is_zero=True)
     lyrics_recommendations.index = lyrics_df.iloc[lyrics_neighbours[0]].index
-    lyrics_recommendations['distance_lyrics'] = lyrics_recommendations['distance_lyrics'].apply(lambda x: float(f'{x:.6f}')) # After reindexing distances were given in scientific notation
 
     recommendations = pd.concat([music_recommendations, lyrics_recommendations["distance_lyrics"]], axis=1)
     recommendations['distance_both'] = (recommendations['distance_music'] + recommendations['distance_lyrics']) / 2
@@ -87,5 +86,10 @@ def make_recommendation(music_df, lyrics_df, song_name, artist_name):
     
     song_name = music_df.iloc[music_neighbours[0]]['track_name'].tolist()[0]
     artist_name =  music_df.iloc[music_neighbours[0]]['track_artist'].tolist()[0]
+
+    # Convert to floats with 4 decimal places (because the values were too long to display)
+    recommendations['distance_music'] = recommendations['distance_music'].apply(lambda x: float(f'{x:.4f}'))
+    recommendations['distance_lyrics'] = recommendations['distance_lyrics'].apply(lambda x: float(f'{x:.4f}'))
+    recommendations['distance_both'] = recommendations['distance_both'].apply(lambda x: float(f'{x:.4f}'))
 
     return recommendations, song_name, artist_name

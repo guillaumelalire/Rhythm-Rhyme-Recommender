@@ -8,20 +8,83 @@
         font-family: Montserrat, Arial, sans-serif;
         color: #ffffff;
       }
+
       body {
         margin: 0;
         padding: 0;
-        background-color: #000000; /* Grey background color */
+        background-color: #000000;
       }
+
       h2 {
         text-align: center;
       }
+
+      h4 {
+        text-align: center;
+      }
+
       a {
         text-decoration: none;
       }
+
       a:hover {
         color: #3366CC;
       }
+
+      .dropdown {
+        position: relative;
+        display: inline-block;
+        text-align: center;
+      }
+
+      .dropdown button {
+        width: 150px;
+        padding: 10px 20px;
+        background-color: #242424;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .dropdown button:hover {
+        background-color: #282828;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #242424;
+        min-width: 150px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        border-radius: 4px;
+        font-size: 12px;
+      }
+
+      .dropdown-content a {
+        color: white;
+        padding: 6px 12px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+      }
+
+      .dropdown-content a:hover {
+        background-color: #282828;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+
+      .dropdown:hover .dropbtn {
+        background-color: #3e8e41;
+      }
+
       img {
         display: block;
         margin-left: auto;
@@ -29,6 +92,7 @@
         margin-bottom: -20px;
         margin-top: 10px
       }
+
       table {
         width: 50%;
         margin-top: 20px;
@@ -38,33 +102,43 @@
         margin-left: auto;
         margin-right: auto;
         background-color: #fff;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       }
-      th, td {
+
+      th,
+      td {
         padding: 12px 15px;
         text-align: left;
+        font-size: 14px;
       }
+
       th:first-child {
         border-top-left-radius: 8px;
       }
+
       th:last-child {
         border-top-right-radius: 8px;
       }
+
       th {
         background-color: #121212;
         color: white;
         font-weight: bold;
       }
+
       tr {
         background-color: #242424;
       }
+
       .button-container {
         text-align: center;
         margin-top: 20px;
       }
+
       .button-container a {
         text-decoration: none;
       }
+
       .button-container button {
         padding: 10px 20px;
         background-color: #242424;
@@ -75,9 +149,15 @@
         transition: background-color 0.3s ease;
         font-weight: bold;
       }
+
       .button-container button:hover {
         background-color: #282828;
       }
+
+      .bold {
+        font-weight: bold;
+      }
+
       footer {
         text-align: center;
         position: fixed;
@@ -86,31 +166,48 @@
         font-size: 14px;
       }
     </style>
+  </head>
+  <body>
     <img src="{{url_for('static', filename='heart-sparkles.svg')}}" width=70px>
     <table>
-      <h2>Here are some top picks if you're a fan of "{{ song_name }}" by {{ artist_name }}.</h2>
+      <h2>If you love '{{ song_name }}' by {{ artist_name }}, check out these top picks.</h2>
+      {% if distance_id == 2 %}
+        <h4>These recommendations are based on similar musical features.</h4>
+      {% elif distance_id == 3 %}
+        <h4>These recommendations are based on similar lyrical features.</h4>
+      {% else %}
+        <h4>These recommendations are based on similar musical and lyrical features.</h4>
+      {% endif %}
       <thead>
         <tr>
-          <th>Song</th>
-          <th>Artist</th>
+          <th style="width: 60%;">Song</th>
+          <th style="width: 25%;">Artist</th>
+          <th style="width: 15%;">
+            <div class="dropdown">
+              <button class="dropbtn">Distance</button>
+              <div class="dropdown-content">
+                <a href="{{ url_for('results', distances='music') }}">by musical features</a>
+                <a href="{{ url_for('results', distances='lyrics') }}">by lyrical features</a>
+                <a href="{{ url_for('results', distances='both') }}">by all features</a>
+              </div>
+            </div>
+          </th>
         </tr>
       </thead>
-      <tbody>
-        {% for rec in recommendation %}
-        <tr>
+      <tbody> {% for rec in recommendation %} <tr>
           <td>{{rec[0]}}</td>
           <td>{{rec[1]}}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
+          <td style="text-align: center;">{{rec[distance_id]}}</td>
+        </tr> {% endfor %} </tbody>
     </table>
     <div class="button-container">
       <a href="{{ url_for('index') }}">
-      <button type="button">Back</button>
+        <button type="button">Back</button>
       </a>
     </div>
     <footer>
-      <p>&copy; 2024 <a href="https://github.com/guillaumelalire">Guillaume Lalire</a></p>
+      <p>&copy; 2024 <a href="https://github.com/guillaumelalire">Guillaume Lalire</a>
+      </p>
     </footer>
-    </body>
+  </body>
 </html>
