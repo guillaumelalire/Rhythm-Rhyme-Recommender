@@ -2,6 +2,8 @@ import pandas as pd
 import re
 from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 from nltk.tokenize import word_tokenize
+import nltk
+nltk.download('punkt')
 
 def generate_embeddings(lyrics, song_names):
     lyrics = [re.sub(r'\[.*\]','', str(x)) for x in lyrics] # Remove song parts identifiers: verse, chorus, etc.
