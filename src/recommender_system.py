@@ -5,30 +5,27 @@ from sklearn.neighbors import NearestNeighbors
 from lyrics_embeddings import generate_embeddings
 from utils import normalize
 
+nb_lyrics_files = 2
+spotify_path = "../data/spotify_songs_cleaned.csv"
+embeddings_path = '../data/lyrics_embeddings.csv'
+
 def init_recommender_system():
-    music_df = pd.read_csv("../data/spotify_songs_cleaned.csv")
-    
-    nb_lyrics_files = 9
-    lyrics_df = pd.DataFrame()
-
-    for i in range(0, nb_lyrics_files):
-        lyrics_df = pd.concat([lyrics_df, pd.read_csv(f"../data/song_lyrics/song_lyrics_{i}.csv")])
-
-    lyrics_df.set_index('Unnamed: 0', inplace=True)
-    lyrics_df.sort_index(inplace=True)
-
-    # Only keep songs for which lyrics have been collected
-    music_df = music_df.iloc[lyrics_df.index]
-
-    # Replace NaN (instrumental songs) by empty string
-    lyrics_df.loc[lyrics_df['lyrics'].isna(), 'lyrics'] = ''
-
-    lyrics = lyrics_df['lyrics'].tolist()
-    song_names = music_df['track_name'].tolist()
-
-    embeddings_path = '../data/lyrics_embeddings.csv'
-    
+    music_df = pd.read_csv(spotify_path)
+   
     if not os.path.isfile(embeddings_path):
+        lyrics_df = pd.DataFrame()
+        for i in range(0, nb_lyrics_files):
+            lyrics_df = pd.concat([lyrics_df, pd.read_csv(f"../data/song_lyrics/song_lyrics_{i}.csv")])
+
+        lyrics_df.set_index('Unnamed: 0', inplace=True)
+        lyrics_df.sort_index(inplace=True)
+
+        # Replace NaN (instrumental songs) by empty string
+        lyrics_df.loc[lyrics_df['lyrics'].isna(), 'lyrics'] = ''
+
+        lyrics = lyrics_df['lyrics'].tolist()
+        song_names = music_df['track_name'].tolist()
+
         embeddings = generate_embeddings(lyrics, song_names)
         embeddings = pd.DataFrame(data=embeddings)
         embeddings.index = lyrics_df.index
@@ -38,10 +35,14 @@ def init_recommender_system():
     lyrics_embeddings.set_index('Unnamed: 0', inplace=True)
     embeddings_size = lyrics_embeddings.shape[1]
 
+    lyrics_df = pd.DataFrame()
     # Normalize the embeddings (values between 0 and 1)
     for i in range(embeddings_size):
         lyrics_df[str(i)] = normalize(lyrics_embeddings[str(i)], min_is_zero=False) / 2
-
+ 
+    # Only keep songs for which lyrics have been collected
+    music_df = music_df.iloc[lyrics_df.index]
+    
     return music_df, lyrics_df
 
 def make_recommendation(music_df, lyrics_df, song_name, artist_name):
@@ -66,7 +67,6 @@ def make_recommendation(music_df, lyrics_df, song_name, artist_name):
         if not song_index_good_artist.empty:
             song_index = song_index_good_artist
 
-    print(music_features.loc[song_index])
     nb_songs = len(music_df)
     
     # Find 10 nearest neighbours for the specified song
@@ -75,9 +75,11 @@ def make_recommendation(music_df, lyrics_df, song_name, artist_name):
 
     music_recommendations = music_df.iloc[music_neighbours[0]][['track_name', 'track_artist']]
     music_recommendations['distance_music'] = normalize(music_distances[0], min_is_zero=True)
-    
-    lyrics_recommendations = lyrics_df.iloc[lyrics_neighbours[0]][['track_name', 'track_artist']]
+
+    lyrics_recommendations = pd.DataFrame()
     lyrics_recommendations['distance_lyrics'] = normalize(lyrics_distances[0], min_is_zero=True)
+    lyrics_recommendations.index = lyrics_df.iloc[lyrics_neighbours[0]].index
+    lyrics_recommendations['distance_lyrics'] = lyrics_recommendations['distance_lyrics'].apply(lambda x: float(f'{x:.6f}')) # After reindexing distances were given in scientific notation
 
     recommendations = pd.concat([music_recommendations, lyrics_recommendations["distance_lyrics"]], axis=1)
     recommendations['distance_both'] = (recommendations['distance_music'] + recommendations['distance_lyrics']) / 2
