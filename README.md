@@ -1,4 +1,4 @@
-# Spotify Song Recommender
+# Rhythm & Rhyme Recommender
 
 ## Overview
 
@@ -6,7 +6,7 @@ This project is designed to offer personalized song recommendations based on a s
 
 By analyzing both the audio characteristics and the thematic elements of a track, the system helps discovering new music which closely aligns with the user's preferences.
 
-![SpotifySongRecommenderDemo](https://github.com/guillaumelalire/Spotify-Song-Recommender/assets/77934673/8e7a258b-69e7-49f6-bad9-ed11b5cf25eb)
+https://github.com/user-attachments/assets/cf719158-8b45-4abe-b17f-c8f8bbd90533
 
 ## Running the Project
 
@@ -22,7 +22,7 @@ pip install -r requirements.txt
 
 Once the dependencies are installed, you can start the project by executing the main application file. Run the following command:
 ```
-python src/app.py
+python3 src/app.py
 ```
 
 ### 3. **Access the Application**
