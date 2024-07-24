@@ -63,7 +63,7 @@ def make_recommendation(music_df, lyrics_df, song_name, artist_name):
     if song_index.empty: # Unknown song
         return None, None, None
     elif len(song_index) > 1 and artist_name != '': # Multiple songs found -> Find the right one by artist name
-        song_index_good_artist = music_df.iloc[song_index][music_df.iloc[song_index]['track_artist'].str.lower() == artist_name.lower()].index
+        song_index_good_artist = music_df.loc[song_index][music_df.loc[song_index]['track_artist'].str.lower() == artist_name.lower()].index
         if not song_index_good_artist.empty:
             song_index = song_index_good_artist
 
