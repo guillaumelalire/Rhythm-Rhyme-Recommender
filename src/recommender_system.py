@@ -5,9 +5,9 @@ from sklearn.neighbors import NearestNeighbors
 from lyrics_embeddings import generate_embeddings
 from utils import normalize
 
-nb_lyrics_files = 2
-spotify_path = "../data/spotify_songs_cleaned.csv"
-embeddings_path = '../data/lyrics_embeddings.csv'
+nb_lyrics_files = 9
+spotify_path = "data/spotify_songs_cleaned.csv"
+embeddings_path = 'data/lyrics_embeddings.csv'
 
 def init_recommender_system():
     music_df = pd.read_csv(spotify_path)
@@ -15,7 +15,7 @@ def init_recommender_system():
     if not os.path.isfile(embeddings_path):
         lyrics_df = pd.DataFrame()
         for i in range(0, nb_lyrics_files):
-            lyrics_df = pd.concat([lyrics_df, pd.read_csv(f"../data/song_lyrics/song_lyrics_{i}.csv")])
+            lyrics_df = pd.concat([lyrics_df, pd.read_csv(f"data/song_lyrics/song_lyrics_{i}.csv")])
 
         lyrics_df.set_index('Unnamed: 0', inplace=True)
         lyrics_df.sort_index(inplace=True)
