@@ -1,7 +1,9 @@
 <!doctype html>
 <html>
   <head>
+    <title>Rhythm & Rhyme Recommender</title>
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link rel="icon" href="{{url_for('static', filename='music-notes.svg')}}">
     <style>
       * {
         font-family: Montserrat, Arial, sans-serif;
@@ -63,7 +65,7 @@
         margin-top: 10px;
       }
       input[type="submit"]:hover {
-        background-color: #282828;
+        background-color: #3e8e41;
       }
       footer {
         text-align: center;
@@ -84,7 +86,7 @@
   <body>
     <img src="{{url_for('static', filename='music-notes.svg')}}" width=250px>
     <div class="content">
-      <h2>Spotify Song Recommender</h2>
+      <h2>Rhythm & Rhyme Recommender</h2>
       {% if not_found == True %}
       <div class="error-banner" id="error-banner">Sorry, we couldn't find that song.<br>Please try again with a different one.</div>
       {% endif %}

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>{{ song_name }}: Similar songs</title>
+    <title>{{ song_name }} - Similar songs</title>
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link rel="icon" href="{{url_for('static', filename='music-notes.svg')}}">
     <style>
       * {
         font-family: Montserrat, Arial, sans-serif;
@@ -109,7 +110,6 @@
       td {
         padding: 12px 15px;
         text-align: left;
-        font-size: 14px;
       }
 
       th:first-child {
@@ -124,10 +124,12 @@
         background-color: #121212;
         color: white;
         font-weight: bold;
+        font-size: 16px;
       }
 
       tr {
         background-color: #242424;
+        font-size: 14px;
       }
 
       .button-container {
@@ -151,7 +153,7 @@
       }
 
       .button-container button:hover {
-        background-color: #282828;
+        background-color: #3e8e41;
       }
 
       .bold {
