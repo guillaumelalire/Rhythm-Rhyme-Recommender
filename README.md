@@ -35,7 +35,7 @@ The project is based on training two K-nearest neighbours (KNN) models, each con
 - The first model uses various features about songs provided by Spotify.
 - The second model uses song lyrics converted into features through embeddings.
 
-![song-recommender-workflow](https://github.com/user-attachments/assets/6ec6e34f-b603-48e2-89ff-a3f53a0b40a2)
+![song-recommender-workflow](https://github.com/user-attachments/assets/04bd1301-f2fd-4e04-bb6b-b141d14f2421)
 
 ### 1. Musical Features
 
